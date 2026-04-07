@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografía Interactiva — IA en Educación Inclusiva</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================================
+           VARIABLES DE DISEÑO
+           ============================================================ */
+        :root {
+            --azul: #1E40AF;
+            --azul-medio: #3B82F6;
+            --azul-claro: #DBEAFE;
+            --azul-suave: #EFF6FF;
+            --verde: #059669;
+            --rojo: #DC2626;
+            --blanco: #FFFFFF;
+            --gris: #6B7280;
+            --gris-oscuro: #1F2937;
+            --gris-claro: #F8FAFC;
+            --sombra: 0 4px 24px rgba(30, 64, 175, 0.07);
+            --sombra-hover: 0 12px 40px rgba(30, 64, 175, 0.18);
+        }
+
+        /* ============================================================
+           BASE GENERAL
+           ============================================================ */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--gris-oscuro);
+            line-height: 1.6;
+            /* Fondo con gradiente sutil en lugar de color plano */
+            background:
+                radial-gradient(ellipse 80% 50% at 20% -10%, rgba(30, 64, 175, 0.06), transparent),
+                radial-gradient(ellipse 60% 40% at 80% 110%, rgba(5, 150, 105, 0.04), transparent),
+                var(--gris-claro);
+            min-height: 100vh;
+        }
+
+        /* ============================================================
+           CABECERA — TÍTULO PRINCIPAL
+           ============================================================ */
+        .infografia {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 56px 24px 20px;
+        }
+
+        .infografia > h1 {
+            text-align: center;
+            color: var(--azul);
+            margin: 0 0 12px;
+            font-size: 1.85rem;
+            font-weight: 800;
+            line-height: 1.3;
+            letter-spacing: -0.03em;
+        }
+
+        /* Subtítulo decorativo bajo el h1 */
+        .infografia > h1::after {
+            content: "";
+            display: block;
+            width: 60px;
+            height: 4px;
+            border-radius: 4px;
+            background: linear-gradient(90deg, var(--azul), var(--verde));
+            margin: 18px auto 0;
+        }
+
+        .subtitulo {
+            text-align: center;
+            color: var(--gris);
+            font-size: 0.92rem;
+            margin: 16px auto 44px;
+            max-width: 540px;
+        }
+
+        /* ============================================================
+           LISTA — Reset
+           ============================================================ */
+        .lista {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* ============================================================
+           TARJETA (cada <li>) — Estructura de dos columnas
+           ============================================================
+           Efectos hover incluidos:
+           1. Escala sutil (scale 1.02)
+           2. Sombra más profunda
+           3. Barra lateral izquierda aparece con color
+           4. Borde sutil que se ilumina
+           5. Fondo con tinte azulado muy suave
+           ============================================================ */
+        .lista li {
+            display: flex;
+            gap: 22px;
+            padding: 26px 28px;
+            margin-bottom: 18px;
+            background: var(--blanco);
+            border-radius: 16px;
+            border-left: 4px solid transparent; /* ← Barra que aparece al hover */
+            box-shadow: var(--sombra);
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+
+            /* Transiciones separadas para controlar cada propiedad */
+            transition:
+                transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                box-shadow 0.4s ease,
+                border-left-color 0.4s ease,
+                background-color 0.4s ease;
+
+            /* Animación de entrada escalonada */
+            opacity: 0;
+            transform: translateY(24px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        /* Escalonamiento: cada tarjeta aparece 100ms después */
+        .lista li:nth-child(1) { animation-delay: 0.1s; }
+        .lista li:nth-child(2) { animation-delay: 0.2s; }
+        .lista li:nth-child(3) { animation-delay: 0.3s; }
+        .lista li:nth-child(4) { animation-delay: 0.4s; }
+        .lista li:nth-child(5) { animation-delay: 0.5s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ── Efecto decorativo: resplandor sutil detrás del icono al hover ── */
+        .lista li::before {
+            content: "";
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%) scale(0);
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(30, 64, 175, 0.1), transparent 70%);
+            transition: transform 0.5s ease;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── 🎯 TODOS LOS EFECTOS HOVER DE LA TARJETA ── */
+        .lista li:hover {
+            transform: scale(1.02) translateY(-2px);
+            box-shadow: var(--sombra-hover);
+            border-left-color: var(--azul);           /* Barra lateral aparece */
+            background-color: var(--azul-suave);      /* Tinte azulado muy suave */
+        }
+
+        .lista li:hover::before {
+            transform: translateY(-50%) scale(1);     /* Resplandor se expande */
+        }
+
+        /* Color de barra diferente por ítem (variación visual) */
+        .lista li:nth-child(2):hover { border-left-color: var(--verde); }
+        .lista li:nth-child(2):hover::before { background: radial-gradient(circle, rgba(5, 150, 105, 0.1), transparent 70%); }
+        .lista li:nth-child(3):hover { border-left-color: var(--rojo); }
+        .lista li:nth-child(3):hover::before { background: radial-gradient(circle, rgba(220, 38, 38, 0.08), transparent 70%); }
+        .lista li:nth-child(4):hover { border-left-color: #D97706; }
+        .lista li:nth-child(4):hover::before { background: radial-gradient(circle, rgba(217, 119, 6, 0.08), transparent 70%); }
+        .lista li:nth-child(5):hover { border-left-color: #7C3AED; }
+        .lista li:nth-child(5):hover::before { background: radial-gradient(circle, rgba(124, 58, 237, 0.08), transparent 70%); }
+
+
+        /* ==========================================================
+           🔄 ICONO SEMICIRCULAR → CÍRCULO COMPLETO AL HOVER
+           ==========================================================
+           ⚙️ VELOCIDAD DE ROTACIÓN: cambia "0.5s" en .icono::after
+           ⚙️ COLOR DEL ICONO: cambia --azul por la variable que quieras
+           ========================================================== */
+        .icono {
+            position: relative;
+            flex-shrink: 0;
+            width: 56px;
+            height: 56px;
+            color: var(--blanco);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.2rem;
+            z-index: 1;
+            letter-spacing: -0.02em;
+        }
+
+        /* Semicírculo izquierdo (fijo) */
+        .icono::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: var(--azul);
+            clip-path: inset(0 50% 0 0);
+            transition: background 0.4s ease;
+        }
+
+        /* Semicírculo derecho (girado → "abierto") */
+        .icono::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: var(--azul);
+            clip-path: inset(0 0 0 50%);
+            transform: rotate(180deg);
+            transition:
+                transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+                background 0.4s ease;
+            /* ⬅️ ⚙️ CAMBIA "0.5s" para velocidad de rotación */
+            /* ⬅️ ⚙️ cubic-bezier con rebote suave al cerrar */
+        }
+
+        /* 🎯 Hover: cierra el círculo + cambio de color por ítem */
+        .lista li:hover .icono::after {
+            transform: rotate(0deg);
+        }
+
+        .lista li:nth-child(2) .icono::before,
+        .lista li:nth-child(2) .icono::after { background: var(--verde); }
+
+        .lista li:nth-child(3) .icono::before,
+        .lista li:nth-child(3) .icono::after { background: var(--rojo); }
+
+        .lista li:nth-child(4) .icono::before,
+        .lista li:nth-child(4) .icono::after { background: #D97706; }
+
+        .lista li:nth-child(5) .icono::before,
+        .lista li:nth-child(5) .icono::after { background: #7C3AED; }
+
+        /* Pequeño pulso al completar el círculo */
+        @keyframes iconPulse {
+            0%   { transform: rotate(0deg) scale(1); }
+            50%  { transform: rotate(0deg) scale(1.08); }
+            100% { transform: rotate(0deg) scale(1); }
+        }
+
+        .lista li:hover .icono::after {
+            animation: iconPulse 0.5s ease 0.2s;
+            /* Se ejecuta la rotación primero, luego el pulso */
+        }
+
+
+        /* ==========================================================
+           🌊 LÍNEA ONDULADA ANIMADA DEBAJO DEL TÍTULO
+           ==========================================================
+           ⚙️ CAMBIAR FORMA DE LA ONDA: reemplaza el base64
+           ⚙️ CAMBIAR COLOR: busca %23 en el base64, reemplaza
+              el código hex posterior (%231E40AF = #1E40AF)
+           ⚙️ VELOCIDAD: cambia "1.8s" en animation y @keyframes
+           ⚙️ DIRECCIÓN: cambia "100px 0" → "-100px 0"
+           ========================================================== */
+
+        /* --- Contenedor de texto (posición relativa para ::after) --- */
+        .contenido {
+            position: relative;
+            z-index: 1;
+            flex: 1;
+            min-width: 0; /* Evita desbordamiento en flex */
+        }
+
+        /* --- Título h2 --- */
+        .contenido h2 {
+            position: relative;
+            display: inline-block;
+            color: var(--gris-oscuro);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 0 0 8px;
+            padding-bottom: 6px;
+            letter-spacing: -0.01em;
+            transition: color 0.35s ease, letter-spacing 0.35s ease;
+        }
+
+        /* 🎯 Hover del título: cambia color + ligero espaciado */
+        .lista li:hover .contenido h2 {
+            color: var(--azul);
+            letter-spacing: 0.02em;
+        }
+
+        /* Cada ítem con su color de título al hover */
+        .lista li:nth-child(2):hover .contenido h2 { color: var(--verde); }
+        .lista li:nth-child(3):hover .contenido h2 { color: var(--rojo); }
+        .lista li:nth-child(4):hover .contenido h2 { color: #D97706; }
+        .lista li:nth-child(5):hover .contenido h2 { color: #7C3AED; }
+
+        /* --- La onda SVG (oculta por defecto) --- */
+        .contenido h2::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 7px;
+
+            /*
+             * 🔧 SVG EN BASE64 — ONDA SUAVE
+             * Para cambiar la forma, reemplaza este string base64
+             * por otro SVG codificado.
+             * Color actual: %231E40AF (azul #1E40AF)
+             */
+            background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTAwJyBoZWlnaHQ9JzcnIHZpZXdCb3g9JzAgMCAxMDAgNycgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJz48cGF0aCBkPSdNMCwzLjVDMTUuOCw3IDMxLjYsMCA0Ny40LDMuNUM2My4yLDcgNzksMCA5NC44LDMuNUwxMDAsMy41JyBzdHJva2U9JyUyMzFFNDBBRicgc3Ryb2tlLXdpZHRoPScyJyBmaWxsPSd0cmFuc3BhcmVudCcgc3Ryb2tlLWxpbmVjYXA9J3JvdW5kJy8+PC9zdmc+");
+            background-repeat: repeat-x;
+            background-size: 100px 7px;
+
+            opacity: 0;
+            transform: scaleX(0);
+            transform-origin: left center;
+            transition:
+                opacity 0.35s ease,
+                transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* 🎯 Hover: la onda se revela desde la izquierda + se mueve */
+        .lista li:hover .contenido h2::after {
+            opacity: 1;
+            transform: scaleX(1);
+            animation: waveMove 1.8s linear infinite;
+            /* ⬅️ ⚙️ "1.8s" = velocidad de la onda */
+        }
+
+        /* 🎞️ Animación de desplazamiento horizontal */
+        @keyframes waveMove {
+            from { background-position: 0 0; }
+            to   { background-position: 100px 0; }
+            /* ⬅️ ⚙️ Cambia a "-100px 0" para invertir dirección */
+        }
+
+
+        /* ==========================================================
+           📝 DESCRIPCIÓN — Efecto hover sutil
+           ========================================================== */
+        .contenido p {
+            color: var(--gris);
+            font-size: 0.93rem;
+            line-height: 1.7;
+            margin: 0;
+            transition: color 0.35s ease;
+        }
+
+        /* Hover: texto pasa a gris más oscuro (mayor legibilidad) */
+        .lista li:hover .contenido p {
+            color: var(--gris-oscuro);
+        }
+
+
+        /* ==========================================================
+           🔢 ETIQUETA DE CATEGORÍA (badge superior)
+           Se añade un pequeño badge con <span class="tag">
+           dentro de .contenido para mayor riqueza visual.
+           ========================================================== */
+        .tag {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+            background: var(--azul-claro);
+            color: var(--azul);
+            transition: background 0.35s ease, color 0.35s ease, transform 0.35s ease;
+        }
+
+        .lista li:nth-child(2) .tag { background: #D1FAE5; color: var(--verde); }
+        .lista li:nth-child(3) .tag { background: #FEE2E2; color: var(--rojo); }
+        .lista li:nth-child(4) .tag { background: #FEF3C7; color: #D97706; }
+        .lista li:nth-child(5) .tag { background: #EDE9FE; color: #7C3AED; }
+
+        .lista li:hover .tag {
+            transform: translateY(-1px);
+        }
+
+        .lista li:nth-child(1):hover .tag { background: var(--azul); color: var(--blanco); }
+        .lista li:nth-child(2):hover .tag { background: var(--verde); color: var(--blanco); }
+        .lista li:nth-child(3):hover .tag { background: var(--rojo); color: var(--blanco); }
+        .lista li:nth-child(4):hover .tag { background: #D97706; color: var(--blanco); }
+        .lista li:nth-child(5):hover .tag { background: #7C3AED; color: var(--blanco); }
+
+
+        /* ============================================================
+           FOOTER
+           ============================================================ */
+        footer {
+            text-align: center;
+            font-size: 0.78rem;
+            color: var(--gris);
+            padding: 32px 24px 40px;
+            max-width: 760px;
+            margin: 0 auto;
+            border-top: 1px solid #E5E7EB;
+        }
+
+        footer .fuente {
+            margin: 0 0 8px;
+            line-height: 1.5;
+        }
+
+        footer .fuente a {
+            color: var(--azul);
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px dashed var(--azul-medio);
+            transition: color 0.3s, border-color 0.3s;
+        }
+
+        footer .fuente a:hover {
+            color: var(--azul-medio);
+            border-bottom-style: solid;
+        }
+
+        footer .autor {
+            margin: 0;
+            font-weight: 600;
+            font-size: 0.82rem;
+        }
+
+
+        /* ============================================================
+           📱 RESPONSIVE
+           ============================================================ */
+        @media (max-width: 600px) {
+            .infografia {
+                padding: 36px 16px 12px;
+            }
+
+            .infografia > h1 {
+                font-size: 1.4rem;
+            }
+
+            .subtitulo {
+                font-size: 0.85rem;
+                margin-bottom: 32px;
+            }
+
+            .lista li {
+                flex-direction: column;
+                padding: 22px 20px;
+                gap: 14px;
+                align-items: flex-start;
+            }
+
+            .icono {
+                width: 52px;
+                height: 52px;
+                font-size: 1.1rem;
+            }
+
+            .contenido h2 {
+                font-size: 1rem;
+            }
+
+            .contenido p {
+                font-size: 0.88rem;
+            }
+
+            /* En móvil, el resplandor se adapta */
+            .lista li::before {
+                left: 10px;
+                top: 26px;
+                transform: translate(0, -50%) scale(0);
+            }
+
+            .lista li:hover::before {
+                transform: translate(0, -50%) scale(1);
+            }
+        }
+
+        /* ============================================================
+           ♿ ACCESIBILIDAD — Respetar preferencia de movimiento reducido
+           ============================================================ */
+        @media (prefers-reduced-motion: reduce) {
+            .lista li {
+                opacity: 1;
+                transform: none;
+                animation: none;
+            }
+
+            .lista li:hover {
+                transform: none;
+            }
+
+            .icono::after {
+                transition: none;
+            }
+
+            .contenido h2::after {
+                transition: none;
+            }
+
+            .lista li:hover .contenido h2::after {
+                animation: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="infografia">
+
+        <h1>Tecnologías de asistencia basadas en IA en la educaci&oacute;n inclusiva</h1>
+        <p class="subtitulo">Beneficios, desaf&iacute;os y recomendaciones pol&iacute;ticas para la adopci&oacute;n equitativa y responsable de la inteligencia artificial</p>
+
+        <ul class="lista">
+
+            <!-- ÍTEM 1 — Interfaces Adaptativas -->
+            <li>
+                <div class="icono">1</div>
+                <div class="contenido">
+                    <span class="tag">Beneficio</span>
+                    <h2>Autonom&iacute;a mediante Interfaces Adaptativas</h2>
+                    <p>Las herramientas de IA permiten navegaci&oacute;n predictiva y adaptativa, facilitando la independencia acad&eacute;mica de estudiantes con discapacidad visual, f&iacute;sica o cognitiva.</p>
+                </div>
+            </li>
+
+            <!-- ÍTEM 2 — PLN -->
+            <li>
+                <div class="icono">2</div>
+                <div class="contenido">
+                    <span class="tag">Beneficio</span>
+                    <h2>Revoluci&oacute;n en la Comunicaci&oacute;n con PLN</h2>
+                    <p>El Procesamiento del Lenguaje Natural simplifica textos y ofrece retroalimentaci&oacute;n en tiempo real, ayudando a estudiantes con TEA o dificultades cognitivas a comunicarse con confianza.</p>
+                </div>
+            </li>
+
+            <!-- ÍTEM 3 — Sesgo Algorítmico -->
+            <li>
+                <div class="icono">3</div>
+                <div class="contenido">
+                    <span class="tag">Desaf&iacute;o</span>
+                    <h2>Sesgo Algor&iacute;tmico e Inclusi&oacute;n Ling&uuml;&iacute;stica</h2>
+                    <p>Los modelos de PLN pueden no representar la diversidad dialectal ni los patrones de habla at&iacute;picos, generando malas interpretaciones o evaluaciones injustas para ciertos estudiantes.</p>
+                </div>
+            </li>
+
+            <!-- ÍTEM 4 — Infraestructura -->
+            <li>
+                <div class="icono">4</div>
+                <div class="contenido">
+                    <span class="tag">Desaf&iacute;o</span>
+                    <h2>Infraestructura y Preparaci&oacute;n Docente</h2>
+                    <p>Se requiere conectividad estable, dispositivos compatibles y capacitaci&oacute;n espec&iacute;fica para que los educadores integren estas herramientas de manera eficaz en su pedagog&iacute;a.</p>
+                </div>
+            </li>
+
+            <!-- ÍTEM 5 — GAID -->
+            <li>
+                <div class="icono">5</div>
+                <div class="contenido">
+                    <span class="tag">Riesgo</span>
+                    <h2>Riesgos de Dependencia (GAID)</h2>
+                    <p>El uso excesivo de IA generativa puede afectar el pensamiento cr&iacute;tico, la creatividad y las habilidades sociales, requiriendo salvaguardas y alfabetizaci&oacute;n digital responsable.</p>
+                </div>
+            </li>
+
+        </ul>
+    </section>
+
+    <footer>
+        <p class="fuente">Fuente: Tecnolog&iacute;as de asistencia basadas en inteligencia artificial en la educaci&oacute;n inclusiva &mdash; <a href="https://doi.org/10.1016/j.sftr.2025.101042" target="_blank" rel="noopener">DOI: 10.1016/j.sftr.2025.101042</a></p>
+        <p class="autor">Dise&ntilde;ado por: Andrea Micaela de los R&iacute;os Quintana</p>
+    </footer>
+
+</body>
+</html>
